@@ -1,0 +1,10 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+Traket-ear/target
+Traket-ejb/lib/*
+Traket-ejb/target
+Traket-web/target
+
+# dependencies
+action-web/node_modules
