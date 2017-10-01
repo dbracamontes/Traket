@@ -53,6 +53,7 @@ public class TestEmpresa extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet TestEmpresa at " + request.getContextPath() + "</h1>");
+            out.println("Empresa : " + empresaEnt.toString());
             out.println("</body>");
             out.println("</html>");
         }
