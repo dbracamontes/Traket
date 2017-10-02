@@ -5,8 +5,8 @@
  */
 package com;
 
-import com.tracket.beans.EmpresaFacade;
-import com.tracket.entity.Empresa;
+import com.traket.beans.EmpresaFacade;
+import com.traket.entity.Empresa;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;

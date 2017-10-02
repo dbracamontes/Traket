@@ -5,7 +5,7 @@
  */
 package com;
 
-import com.tracket.entity.Usuario;
+import com.traket.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TestUsuario extends HttpServlet {
 
     @EJB
-    private com.tracket.beans.UsuarioFacade usuarioFacade;
+    private com.traket.beans.UsuarioFacade usuarioFacade;
     
     
 
