@@ -1,4 +1,4 @@
-package com.exceptions;
+package com.traket.exceptions;
 
 public class PreexistingEntityException extends Exception {
     public PreexistingEntityException(String message, Throwable cause) {

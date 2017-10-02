@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tracket.entity;
+package com.traket.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -21,7 +22,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,8 +50,7 @@ public class Ticket implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_gen")
-    @SequenceGenerator(name = "seq_gen", sequenceName = "ticket_rid_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "rid", nullable = false)
     private Long rid;
@@ -89,14 +88,22 @@ public class Ticket implements Serializable {
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
+    
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ridTicket", fetch = FetchType.LAZY)
     private Collection<TicketComentarios> ticketComentariosCollection;
+    
+    @JsonIgnore
     @JoinColumn(name = "rid_empleado", referencedColumnName = "rid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empleado ridEmpleado;
+    
+    @JsonIgnore
     @JoinColumn(name = "belongs", referencedColumnName = "rid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa belongs;
+    
+    @JsonIgnore
     @JoinColumn(name = "rid_usuario", referencedColumnName = "rid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario ridUsuario;
@@ -251,7 +258,7 @@ public class Ticket implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tracket.entity.Ticket[ rid=" + rid + " ]";
+        return "Ticket{" + "rid=" + rid + ", titulo=" + titulo + ", descripcion=" + descripcion + ", prioridad=" + prioridad + ", tiempoEstimado=" + tiempoEstimado + ", area=" + area + ", status=" + status + ", fechaEstimada=" + fechaEstimada + ", fechaCreacion=" + fechaCreacion + ", fechaModificacion=" + fechaModificacion + '}';
     }
-    
+
 }

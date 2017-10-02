@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tracket.beans;
+package com.traket.beans;
 
-import com.tracket.entity.Usuario;
+import com.traket.entity.Ticket;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class UsuarioFacade extends AbstractFacade<Usuario> {
+public class TicketFacade extends AbstractFacade<Ticket> {
 
     @PersistenceContext(unitName = "TraketPU")
     private EntityManager em;
@@ -27,8 +27,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         return em;
     }
 
-    public UsuarioFacade() {
-        super(Usuario.class);
+    public TicketFacade() {
+        super(Ticket.class);
     }
     
 }

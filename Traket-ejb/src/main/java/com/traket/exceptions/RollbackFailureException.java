@@ -1,4 +1,4 @@
-package com.exceptions;
+package com.traket.exceptions;
 
 public class RollbackFailureException extends Exception {
     public RollbackFailureException(String message, Throwable cause) {

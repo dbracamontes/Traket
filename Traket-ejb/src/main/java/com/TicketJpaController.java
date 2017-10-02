@@ -5,19 +5,19 @@
  */
 package com;
 
-import com.exceptions.IllegalOrphanException;
-import com.exceptions.NonexistentEntityException;
-import com.exceptions.RollbackFailureException;
+import com.traket.exceptions.IllegalOrphanException;
+import com.traket.exceptions.NonexistentEntityException;
+import com.traket.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.tracket.entity.Empleado;
-import com.tracket.entity.Empresa;
-import com.tracket.entity.Ticket;
-import com.tracket.entity.Usuario;
-import com.tracket.entity.TicketComentarios;
+import com.traket.entity.Empleado;
+import com.traket.entity.Empresa;
+import com.traket.entity.Ticket;
+import com.traket.entity.Usuario;
+import com.traket.entity.TicketComentarios;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

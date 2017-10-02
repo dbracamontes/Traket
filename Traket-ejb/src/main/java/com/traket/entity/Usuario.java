@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tracket.entity;
+package com.traket.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,21 +30,22 @@ import javax.validation.constraints.Size;
  * @author dani
  */
 @Entity
-@Table(name = "empleado", catalog = "traket", schema = "public")
+@Table(name = "usuario", catalog = "traket", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
-    , @NamedQuery(name = "Empleado.findByRid", query = "SELECT e FROM Empleado e WHERE e.rid = :rid")
-    , @NamedQuery(name = "Empleado.findByNombre", query = "SELECT e FROM Empleado e WHERE e.nombre = :nombre")
-    , @NamedQuery(name = "Empleado.findByApellidoPaterno", query = "SELECT e FROM Empleado e WHERE e.apellidoPaterno = :apellidoPaterno")
-    , @NamedQuery(name = "Empleado.findByApellidoMaterno", query = "SELECT e FROM Empleado e WHERE e.apellidoMaterno = :apellidoMaterno")
-    , @NamedQuery(name = "Empleado.findByPuesto", query = "SELECT e FROM Empleado e WHERE e.puesto = :puesto")
-    , @NamedQuery(name = "Empleado.findByArea", query = "SELECT e FROM Empleado e WHERE e.area = :area")})
-public class Empleado implements Serializable {
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+    , @NamedQuery(name = "Usuario.findByRid", query = "SELECT u FROM Usuario u WHERE u.rid = :rid")
+    , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
+    , @NamedQuery(name = "Usuario.findByApellidoPaterno", query = "SELECT u FROM Usuario u WHERE u.apellidoPaterno = :apellidoPaterno")
+    , @NamedQuery(name = "Usuario.findByApellidoMaterno", query = "SELECT u FROM Usuario u WHERE u.apellidoMaterno = :apellidoMaterno")
+    , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
+    , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
+    , @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono")
+    , @NamedQuery(name = "Usuario.findByExt", query = "SELECT u FROM Usuario u WHERE u.ext = :ext")})
+public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_gen")
-    @SequenceGenerator(name = "seq_gen", sequenceName = "empleado_rid_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "rid", nullable = false)
     private Long rid;
@@ -63,32 +64,51 @@ public class Empleado implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "apellido_materno", nullable = false)
     private String apellidoMaterno;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "email", nullable = false)
+    private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "password", nullable = false)
+    private String password;
     @Size(max = 2147483647)
-    @Column(name = "puesto")
-    private String puesto;
+    @Column(name = "telefono")
+    private String telefono;
     @Size(max = 2147483647)
-    @Column(name = "area")
-    private String area;
-    @OneToMany(mappedBy = "ridEmpleado", fetch = FetchType.LAZY)
+    @Column(name = "ext")
+    private String ext;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "ridUsuario", fetch = FetchType.LAZY)
     private Collection<TicketComentarios> ticketComentariosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ridEmpleado", fetch = FetchType.LAZY)
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "ridUsuario", fetch = FetchType.LAZY)
     private Collection<Ticket> ticketCollection;
+    
+    @JsonIgnore
     @JoinColumn(name = "belongs", referencedColumnName = "rid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa belongs;
 
-    public Empleado() {
+    public Usuario() {
     }
 
-    public Empleado(Long rid) {
+    public Usuario(Long rid) {
         this.rid = rid;
     }
 
-    public Empleado(Long rid, String nombre, String apellidoPaterno, String apellidoMaterno) {
+    public Usuario(Long rid, String nombre, String apellidoPaterno, String apellidoMaterno, String email, String password) {
         this.rid = rid;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
+        this.email = email;
+        this.password = password;
     }
 
     public Long getRid() {
@@ -123,20 +143,36 @@ public class Empleado implements Serializable {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getPuesto() {
-        return puesto;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPuesto(String puesto) {
-        this.puesto = puesto;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getArea() {
-        return area;
+    public String getPassword() {
+        return password;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
     }
 
     public Collection<TicketComentarios> getTicketComentariosCollection() {
@@ -173,10 +209,10 @@ public class Empleado implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Empleado)) {
+        if (!(object instanceof Usuario)) {
             return false;
         }
-        Empleado other = (Empleado) object;
+        Usuario other = (Usuario) object;
         if ((this.rid == null && other.rid != null) || (this.rid != null && !this.rid.equals(other.rid))) {
             return false;
         }
@@ -185,7 +221,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tracket.entity.Empleado[ rid=" + rid + " ]";
+        return "Usuario{" + "rid=" + rid + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", email=" + email + ", password=" + password + ", telefono=" + telefono + ", ext=" + ext + '}';
     }
-    
+
 }

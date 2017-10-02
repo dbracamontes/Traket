@@ -1,4 +1,4 @@
-package com.exceptions;
+package com.traket.exceptions;
 
 public class NonexistentEntityException extends Exception {
     public NonexistentEntityException(String message, Throwable cause) {

@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tracket.beans;
+package com.traket.beans;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -22,12 +25,13 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public void create(T entity) {
+    public T create(T entity) {
         getEntityManager().persist(entity);
+        return entity;
     }
 
-    public void edit(T entity) {
-        getEntityManager().merge(entity);
+    public T edit(T entity) {
+        return getEntityManager().merge(entity);
     }
 
     public void remove(T entity) {
@@ -41,6 +45,7 @@ public abstract class AbstractFacade<T> {
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
+        
         return getEntityManager().createQuery(cq).getResultList();
     }
 
@@ -60,5 +65,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

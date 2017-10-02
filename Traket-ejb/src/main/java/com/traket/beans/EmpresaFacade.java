@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tracket.beans;
+package com.traket.beans;
 
-import com.tracket.entity.Empresa;
+import com.traket.entity.Empresa;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

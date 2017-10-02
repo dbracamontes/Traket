@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tracket.entity;
+package com.traket.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -18,7 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -37,8 +37,6 @@ public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_gen")
-    //@SequenceGenerator(name = "seq_gen", sequenceName = "empresa_rid_seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "rid", nullable = false)
@@ -48,10 +46,16 @@ public class Empresa implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "nombre", nullable = false)
     private String nombre;
+    
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "belongs", fetch = FetchType.LAZY)
     private Collection<Ticket> ticketCollection;
+    
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "belongs", fetch = FetchType.LAZY)
     private Collection<Empleado> empleadoCollection;
+    
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "belongs", fetch = FetchType.LAZY)
     private Collection<Usuario> usuarioCollection;
 
@@ -129,7 +133,9 @@ public class Empresa implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tracket.entity.Empresa[ rid=" + rid + " ]";
+        return "Empresa{" + "rid=" + rid + ", nombre=" + nombre + '}';
     }
+
+    
     
 }

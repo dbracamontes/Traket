@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tracket.entity;
+package com.traket.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -18,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,8 +40,7 @@ public class TicketComentarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_gen")
-    @SequenceGenerator(name = "seq_gen", sequenceName = "ticket_comentarios_rid_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "rid", nullable = false)
     private Long rid;
@@ -53,12 +52,18 @@ public class TicketComentarios implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
+    
+    @JsonIgnore
     @JoinColumn(name = "rid_empleado", referencedColumnName = "rid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Empleado ridEmpleado;
+    
+    @JsonIgnore
     @JoinColumn(name = "rid_ticket", referencedColumnName = "rid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Ticket ridTicket;
+    
+    @JsonIgnore
     @JoinColumn(name = "rid_usuario", referencedColumnName = "rid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario ridUsuario;
@@ -145,7 +150,7 @@ public class TicketComentarios implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tracket.entity.TicketComentarios[ rid=" + rid + " ]";
+        return "TicketComentarios{" + "rid=" + rid + ", comentario=" + comentario + ", fechaCreacion=" + fechaCreacion + '}';
     }
-    
+
 }

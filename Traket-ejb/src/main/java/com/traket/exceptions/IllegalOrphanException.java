@@ -1,4 +1,4 @@
-package com.exceptions;
+package com.traket.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,17 +5,17 @@
  */
 package com;
 
-import com.exceptions.NonexistentEntityException;
-import com.exceptions.RollbackFailureException;
+import com.traket.exceptions.NonexistentEntityException;
+import com.traket.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.tracket.entity.Empleado;
-import com.tracket.entity.Ticket;
-import com.tracket.entity.TicketComentarios;
-import com.tracket.entity.Usuario;
+import com.traket.entity.Empleado;
+import com.traket.entity.Ticket;
+import com.traket.entity.TicketComentarios;
+import com.traket.entity.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
