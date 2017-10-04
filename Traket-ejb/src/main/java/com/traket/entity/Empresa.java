@@ -30,9 +30,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "empresa", catalog = "traket", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e")
-    , @NamedQuery(name = "Empresa.findByRid", query = "SELECT e FROM Empresa e WHERE e.rid = :rid")
-    , @NamedQuery(name = "Empresa.findByNombre", query = "SELECT e FROM Empresa e WHERE e.nombre = :nombre")})
+    @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e"), 
+    @NamedQuery(name = "Empresa.findByRid", query = "SELECT e FROM Empresa e WHERE e.rid = :rid"), 
+    @NamedQuery(name = "Empresa.findByNombre", query = "SELECT e FROM Empresa e WHERE e.nombre = :nombre")
+})
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
