@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.traket.jaxrs.resources;
 
-import com.traket.entity.Empresa;
+import com.traket.entity.Ticket;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -25,22 +20,22 @@ import javax.ws.rs.core.Response;
 /**
  * REST Web Service
  *
- * @author dani
+ * @author Abraham Rayas<abraham.rayas@hotmail.com>
  */
-@Path("empresa")
+@Path("ticket")
 @RequestScoped
-public class EmpresaResource {
+public class TicketResource {
 
     @Context
     private UriInfo context;
 
     @EJB
-    private com.traket.beans.EmpresaFacade empresaFacade;
+    private com.traket.beans.TicketFacade ticketFacade;
 
     /**
      * Creates a new instance of GenericResource
      */
-    public EmpresaResource() {
+    public TicketResource() {
     }
 
     /**
@@ -52,52 +47,43 @@ public class EmpresaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmpresas() {
-        System.out.println("Sí entró getEmpresas");
-        List<Empresa> empresas = empresaFacade.findAll();
-        if (empresas.isEmpty()) {
+    public Response getAll() {
+        List<Ticket> ticket = ticketFacade.findAll();
+        if (ticket.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        return Response.ok(empresas).build();
+        return Response.ok(ticket).build();
     }
 
     @GET
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmpresaById(@PathParam("id") long id) {
-        System.out.println("Sí entró getEmpresaById");
-        Empresa empresa = empresaFacade.find(id);
-        if (empresa == null) {
+    public Response getById(@PathParam("id") long id) {
+        Ticket ticket = ticketFacade.find(id);
+        if (ticket == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        return Response.ok(empresa).build();
+        return Response.ok(ticket).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUser(Empresa empresa) {
-        System.out.println("Sí entró addUser");
-
-        return Response.status(Response.Status.CREATED).entity(empresaFacade.create(empresa)).build();
-
+    public Response add(Ticket ticket) {
+        return Response.status(Response.Status.CREATED).entity(ticketFacade.create(ticket)).build();
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateEmpresa(Empresa empresa) {
-        System.out.println("Sí entró updateEmpresa");
-        return Response.status(Response.Status.OK).entity(empresaFacade.edit(empresa)).build();
+    public Response update(Ticket ticket) {
+        return Response.status(Response.Status.OK).entity(ticketFacade.edit(ticket)).build();
     }
 
     @DELETE
-    public Response deleteUser(Empresa empresa) {
-        System.out.println("Sí entró deleteUser");
-        empresaFacade.remove(empresa);
+    public Response delete(Ticket ticket) {
+        ticketFacade.remove(ticket);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
