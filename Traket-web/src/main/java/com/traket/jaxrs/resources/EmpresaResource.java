@@ -55,7 +55,6 @@ public class EmpresaResource {
     public Response getEmpresas() {
         System.out.println("Sí entró getEmpresas");
         List<Empresa> empresas = empresaFacade.findAll();
-
         if (empresas.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
