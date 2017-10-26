@@ -8,3 +8,4 @@ Traket-web/target
 
 # dependencies
 action-web/node_modules
+/target/
