@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,7 +39,6 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Usuario.findByApellidoPaterno", query = "SELECT u FROM Usuario u WHERE u.apellidoPaterno = :apellidoPaterno")
     , @NamedQuery(name = "Usuario.findByApellidoMaterno", query = "SELECT u FROM Usuario u WHERE u.apellidoMaterno = :apellidoMaterno")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
-    , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
     , @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono")
     , @NamedQuery(name = "Usuario.findByExt", query = "SELECT u FROM Usuario u WHERE u.ext = :ext")})
 public class Usuario implements Serializable {
@@ -70,30 +70,35 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "email", nullable = false)
     private String email;
-    @Basic(optional = false)
+
+    /*@Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "password", nullable = false)
-    private String password;
+    private String password;*/
     @Size(max = 2147483647)
     @Column(name = "telefono")
     private String telefono;
     @Size(max = 2147483647)
     @Column(name = "ext")
     private String ext;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "ridUsuario", fetch = FetchType.LAZY)
     private Collection<TicketComentarios> ticketComentariosCollection;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "ridUsuario", fetch = FetchType.LAZY)
     private Collection<Ticket> ticketCollection;
-    
-    @JsonIgnore
+
+    //@JsonIgnore
     @JoinColumn(name = "belongs", referencedColumnName = "rid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa belongs;
+
+    
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "usuario",cascade = CascadeType.ALL)
+    private CredencialesUsuario credencialesUsuario;
 
     public Usuario() {
     }
@@ -102,13 +107,12 @@ public class Usuario implements Serializable {
         this.rid = rid;
     }
 
-    public Usuario(Long rid, String nombre, String apellidoPaterno, String apellidoMaterno, String email, String password) {
+    public Usuario(Long rid, String nombre, String apellidoPaterno, String apellidoMaterno, String email) {
         this.rid = rid;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.email = email;
-        this.password = password;
     }
 
     public Long getRid() {
@@ -151,14 +155,13 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
+    /*public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
+    }*/
     public String getTelefono() {
         return telefono;
     }
@@ -199,6 +202,14 @@ public class Usuario implements Serializable {
         this.belongs = belongs;
     }
 
+    public CredencialesUsuario getCredencialesUsuario() {
+        return credencialesUsuario;
+    }
+
+    public void setCredencialesUsuario(CredencialesUsuario usuarioCredenciales) {
+        this.credencialesUsuario = usuarioCredenciales;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -221,7 +232,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "rid=" + rid + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", email=" + email + ", password=" + password + ", telefono=" + telefono + ", ext=" + ext + '}';
+        return "Usuario{" + "rid=" + rid + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", email=" + email + ", telefono=" + telefono + ", ext=" + ext + '}';
     }
 
 }
