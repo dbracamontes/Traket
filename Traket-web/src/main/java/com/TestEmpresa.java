@@ -15,6 +15,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -49,7 +55,13 @@ public class TestEmpresa extends HttpServlet {
             Empresa empresaEnt = new Empresa();
             empresaEnt.setNombre("test empresa");
             
-            empresaFacade.create(empresaEnt);
+//            empresaFacade.create(empresaEnt);
+            
+            Client clientEmpresa = ClientBuilder.newClient();
+            WebTarget target = clientEmpresa.target("http://localhost:8080/Traket-web/resources/empresa");
+            Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON);
+            builder.post(Entity.entity(empresaEnt, MediaType.APPLICATION_JSON));
+            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet TestEmpresa at " + request.getContextPath() + "</h1>");

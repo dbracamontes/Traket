@@ -52,7 +52,8 @@ public class EmpresaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAllEmpresas() {
+    public Response getEmpresas() {
+        System.out.println("Sí entró getEmpresas");
         List<Empresa> empresas = empresaFacade.findAll();
 
         if (empresas.isEmpty()) {
@@ -66,7 +67,8 @@ public class EmpresaResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findEmpresaById(@PathParam("id") long id) {
+    public Response getEmpresaById(@PathParam("id") long id) {
+        System.out.println("Sí entró getEmpresaById");
         Empresa empresa = empresaFacade.find(id);
         if (empresa == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -78,7 +80,8 @@ public class EmpresaResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createEmpresa(Empresa empresa) {
+    public Response addUser(Empresa empresa) {
+        System.out.println("Sí entró addUser");
 
         return Response.status(Response.Status.CREATED).entity(empresaFacade.create(empresa)).build();
 
@@ -87,12 +90,14 @@ public class EmpresaResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editEmpresa(Empresa empresa) {
+    public Response updateEmpresa(Empresa empresa) {
+        System.out.println("Sí entró updateEmpresa");
         return Response.status(Response.Status.OK).entity(empresaFacade.edit(empresa)).build();
     }
 
     @DELETE
-    public Response removeUser(Empresa empresa) {
+    public Response deleteUser(Empresa empresa) {
+        System.out.println("Sí entró deleteUser");
         empresaFacade.remove(empresa);
         return Response.status(Response.Status.NO_CONTENT).build();
     }

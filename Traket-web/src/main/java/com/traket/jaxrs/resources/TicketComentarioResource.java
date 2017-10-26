@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.traket.jaxrs.resources;
 
-import com.traket.entity.Usuario;
+import com.traket.entity.TicketComentarios;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -25,22 +20,22 @@ import javax.ws.rs.core.Response;
 /**
  * REST Web Service
  *
- * @author dani
+ * @author Abraham Rayas<abraham.rayas@hotmail.com>
  */
-@Path("usuario")
+@Path("ticketComentarios")
 @RequestScoped
-public class UsuarioResource {
+public class TicketComentarioResource {
 
     @Context
     private UriInfo context;
 
     @EJB
-    private com.traket.beans.UsuarioFacade usuarioFacade;
+    private com.traket.beans.TicketComentariosFacade ticketComentariosFacade;
 
     /**
      * Creates a new instance of GenericResource
      */
-    public UsuarioResource() {
+    public TicketComentarioResource() {
     }
 
     /**
@@ -52,48 +47,43 @@ public class UsuarioResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAllUsuarios() {
-        List<Usuario> usuarios = usuarioFacade.findAll();
-
-        if (usuarios.isEmpty()) {
+    public Response getAll() {
+        List<TicketComentarios> empresas = ticketComentariosFacade.findAll();
+        if (empresas.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        return Response.ok(usuarios).build();
+        return Response.ok(empresas).build();
     }
 
     @GET
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findEmpresaById(@PathParam("id") long id) {
-        Usuario usuario = usuarioFacade.find(id);
-        if (usuario == null) {
+    public Response getById(@PathParam("id") long id) {
+        TicketComentarios ticketComentarios = ticketComentariosFacade.find(id);
+        if (ticketComentarios == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        return Response.ok(usuario).build();
+        return Response.ok(ticketComentarios).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUser(Usuario usuario) {
-
-        return Response.status(Response.Status.CREATED).entity(usuarioFacade.create(usuario)).build();
-
+    public Response add(TicketComentarios ticketComentarios) {
+        return Response.status(Response.Status.CREATED).entity(ticketComentariosFacade.create(ticketComentarios)).build();
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editEmpresa(Usuario usuario) {
-        return Response.status(Response.Status.OK).entity(usuarioFacade.edit(usuario)).build();
+    public Response update(TicketComentarios ticketComentarios) {
+        return Response.status(Response.Status.OK).entity(ticketComentariosFacade.edit(ticketComentarios)).build();
     }
 
     @DELETE
-    public Response deleteUser(Usuario usuario) {
-        usuarioFacade.remove(usuario);
+    public Response delete(TicketComentarios ticketComentarios) {
+        ticketComentariosFacade.remove(ticketComentarios);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
