@@ -5,7 +5,7 @@
  */
 package com.traket.jaxrs.resources;
 
-import com.traket.entity.Empresa;
+import com.traket.entity.Usuario;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -27,20 +27,20 @@ import javax.ws.rs.core.Response;
  *
  * @author dani
  */
-@Path("empresa")
+@Path("usuario")
 @RequestScoped
-public class EmpresaResource {
+public class UsuarioResource {
 
     @Context
     private UriInfo context;
 
     @EJB
-    private com.traket.beans.EmpresaFacade empresaFacade;
+    private com.traket.beans.UsuarioFacade usuarioFacade;
 
     /**
      * Creates a new instance of GenericResource
      */
-    public EmpresaResource() {
+    public UsuarioResource() {
     }
 
     /**
@@ -52,14 +52,14 @@ public class EmpresaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAllEmpresas() {
-        List<Empresa> empresas = empresaFacade.findAll();
+    public Response findAllUsuarios() {
+        List<Usuario> usuarios = usuarioFacade.findAll();
 
-        if (empresas.isEmpty()) {
+        if (usuarios.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.ok(empresas).build();
+        return Response.ok(usuarios).build();
     }
 
     @GET
@@ -67,33 +67,33 @@ public class EmpresaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response findEmpresaById(@PathParam("id") long id) {
-        Empresa empresa = empresaFacade.find(id);
-        if (empresa == null) {
+        Usuario usuario = usuarioFacade.find(id);
+        if (usuario == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.ok(empresa).build();
+        return Response.ok(usuario).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createEmpresa(Empresa empresa) {
+    public Response createUser(Usuario usuario) {
 
-        return Response.status(Response.Status.CREATED).entity(empresaFacade.create(empresa)).build();
+        return Response.status(Response.Status.CREATED).entity(usuarioFacade.create(usuario)).build();
 
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editEmpresa(Empresa empresa) {
-        return Response.status(Response.Status.OK).entity(empresaFacade.edit(empresa)).build();
+    public Response editEmpresa(Usuario usuario) {
+        return Response.status(Response.Status.OK).entity(usuarioFacade.edit(usuario)).build();
     }
 
     @DELETE
-    public Response removeUser(Empresa empresa) {
-        empresaFacade.remove(empresa);
+    public Response deleteUser(Usuario usuario) {
+        usuarioFacade.remove(usuario);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
