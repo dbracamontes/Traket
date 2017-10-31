@@ -5,7 +5,7 @@
  */
 package com.traket.beans;
 
-import com.traket.entity.CredencialesUsuario;
+import com.traket.entity.Empleado;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,8 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class CredecialesFacade extends AbstractFacade<CredencialesUsuario> {
-
+public class EmpleadoFacade extends AbstractFacade<Empleado> {
     @PersistenceContext(unitName = "TraketPU")
     private EntityManager em;
 
@@ -27,8 +26,7 @@ public class CredecialesFacade extends AbstractFacade<CredencialesUsuario> {
         return em;
     }
 
-    public CredecialesFacade() {
-        super(CredencialesUsuario.class);
+    public EmpleadoFacade() {
+        super(Empleado.class);
     }
-    
 }

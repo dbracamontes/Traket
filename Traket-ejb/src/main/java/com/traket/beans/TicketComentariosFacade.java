@@ -6,6 +6,7 @@
 package com.traket.beans;
 
 import com.traket.entity.CredencialesUsuario;
+import com.traket.entity.TicketComentarios;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,9 +18,9 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class CredecialesFacade extends AbstractFacade<CredencialesUsuario> {
-
-    @PersistenceContext(unitName = "TraketPU")
+public class TicketComentariosFacade extends AbstractFacade<TicketComentarios> {
+   
+     @PersistenceContext(unitName = "TraketPU")
     private EntityManager em;
 
     @Override
@@ -27,8 +28,8 @@ public class CredecialesFacade extends AbstractFacade<CredencialesUsuario> {
         return em;
     }
 
-    public CredecialesFacade() {
-        super(CredencialesUsuario.class);
+    public TicketComentariosFacade() {
+        super(TicketComentarios.class);
     }
     
 }
