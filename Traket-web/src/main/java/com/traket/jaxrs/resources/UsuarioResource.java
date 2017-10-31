@@ -31,7 +31,7 @@ public class UsuarioResource {
 
     @EJB
     private com.traket.beans.UsuarioFacade usuarioFacade;
-
+    
     /**
      * Creates a new instance of GenericResource
      */
@@ -71,7 +71,7 @@ public class UsuarioResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Usuario usuario) {
-        return Response.status(Response.Status.CREATED).entity(usuarioFacade.create(usuario)).build();
+        return Response.status(Response.Status.CREATED).entity(usuarioFacade.createUserWithCred(usuario)).build();
     }
 
     @PUT
